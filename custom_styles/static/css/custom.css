@@ -1,0 +1,107 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    /* Base para las unidades relativas */
+}
+
+/* Botón habilitado */
+.i-button.login-form-button.button-custom-enabled {
+    background-color: #0075a3;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Botón deshabilitado */
+.i-button.login-form-button.button-custom-disabled {
+    background-color: #ececec;
+    color: #777;
+    cursor: not-allowed;
+}
+
+/* Media Query para pantallas con un ancho máximo de 768px (tabletas y móviles en orientación vertical) */
+@media (max-width: 980px) {
+
+    /* Ajustar el contenedor para que use flex y ocupe todo el ancho */
+    .login-page .middle .centered-column-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        /* Alinea los elementos al principio del contenedor */
+        align-items: center;
+        /* Centra los elementos horizontalmente */
+        width: 100vw;
+        /* Ocupa el 100% del ancho de la ventana */
+        height: 100vh;
+        /* Ocupa el 100% de la altura de la ventana */
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Ajustar el tamaño del formulario o elementos dentro de .centered-column-wrapper */
+    .login-container {
+        width: 100%;
+        /* Asegura que el formulario ocupe el 100% del ancho disponible */
+        padding: 1.25rem;
+        /* 20px en unidades relativas */
+    }
+
+    .login-page .middle .centered-column-wrapper .centered-column {
+        width: 90%;
+        /* Aumenta el ancho del contenedor a un 90% del ancho de la ventana */
+        max-width: 950px;
+        /* Puedes poner un límite de ancho máximo */
+        padding: 1.875rem;
+        /* 30px en unidades relativas */
+        margin: 0 auto;
+        /* Centra el contenedor en la pantalla */
+        font-size: 1.875rem;
+        /* Equivale a 30px basado en la raíz (16px) */
+        display: flex;
+        flex-direction: column;
+        /* Asegura que los elementos se apilen de forma vertical */
+        justify-content: center;
+        /* Alinea los elementos verticalmente al centro */
+        height: auto;
+        /* Deja que el contenedor crezca dependiendo del contenido */
+    }
+
+    #identifier,
+    #password {
+        width: 100%;
+        /* Asegura que los inputs ocupen todo el ancho disponible */
+        padding: 0.9375rem;
+        /* 15px en unidades relativas */
+        font-size: 1.875rem;
+        /* Aumenta el tamaño de la fuente dentro de los inputs */
+        border-radius: 0.5rem;
+        /* 8px en unidades relativas */
+        border: 0.125rem solid #ccc;
+        /* 2px en unidades relativas */
+        box-sizing: border-box;
+        /* Asegura que el padding no afecte el ancho total */
+        margin-bottom: 1.25rem;
+        /* 20px en unidades relativas */
+    }
+
+    /* Agregar un estilo más visible cuando los inputs están enfocados (focus) */
+    #identifier:focus,
+    #password:focus {
+        border-color: #007bff;
+        /* Cambia el color del borde al hacer focus en el campo */
+        outline: none;
+        /* Elimina el borde predeterminado del navegador */
+    }
+
+    /* Aumentar el tamaño del botón */
+    .i-button.login-form-button {
+        padding: 0.9375rem;
+        /* 15px en unidades relativas */
+        font-size: 1.5rem;
+        /* 24px en unidades relativas */
+        width: 100%;
+        /* Hace que el botón ocupe todo el ancho disponible */
+    }
+}

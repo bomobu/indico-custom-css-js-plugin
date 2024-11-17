@@ -1,0 +1,2 @@
+include custom_styles/static/css/custom.css
+include custom_styles/static/js/custom_login.js
