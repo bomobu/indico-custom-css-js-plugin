@@ -33,6 +33,21 @@ function init() {
                     });
                 }
 
+                const selectNoC = document.getElementById('custom_52');
+                if (!selectNoC) {
+                    console.warn("No se encontró el elemento 'select Number of communicatios'");
+                    return;
+                } else {
+                    const selectCT = document.getElementById('submitted_contrib_type');
+                    if (selectCT && selectCT.value == 2 && selectNoC.options[selectNoC.selectedIndex].text == '') {
+                        disableCustomNoCAbstractFields();
+                    }
+                    selectNoC.addEventListener('change', function () {
+                        enableCustomNoCAbstractFieldsBySelectValue(selectNoC.options[selectNoC.selectedIndex].text);
+                    });
+                }
+
+
                 // Detener el observer después de haber ejecutado la acción
                 observer.disconnect();
             }
@@ -56,6 +71,27 @@ function disableCustomAbstractFields() {
     setEnabledWorkshopCustomAbstractFields(false);
 }
 
+function disableCustomNoCAbstractFields() {
+    setEnabledNoC4CustomAbstractFields(true);
+    setEnabledNoC5CustomAbstractFields(false);
+    setEnabledNoC6CustomAbstractFields(false);
+}
+
+function enableCustomNoCAbstractFieldsBySelectValue(value) {
+    const selectCT = document.getElementById('submitted_contrib_type');
+    if (selectCT && selectCT.value == 2) {
+        if (value == '4') {
+            setEnabledNoC4CustomAbstractFields(true);
+        } else if (value == '5') {
+            setEnabledNoC5CustomAbstractFields(true);
+        } else if (value == '6') {
+            setEnabledNoC6CustomAbstractFields(true);
+        } else if (value == '') {
+            disableCustomNoCAbstractFields();
+        }
+    }
+}
+
 function enableCustomAbstractFieldsBySelectValue(value) {
     disableCustomAbstractFields();
     if (value == 1) { // Oral Presentation
@@ -71,6 +107,27 @@ function enableCustomAbstractFieldsBySelectValue(value) {
     }
 }
 
+function setEnabledNoC4CustomAbstractFields(value) {
+    for (let i = 6; i <= 10; i++) {
+        setDisplayAndInput(i, value);
+    }
+    for (let i = 27; i <= 41; i++) {
+        setDisplayAndInput(i, value);
+    }
+}
+
+function setEnabledNoC5CustomAbstractFields(value) {
+    for (let i = 42; i <= 46; i++) {
+        setDisplayAndInput(i, value);
+    }
+}
+
+function setEnabledNoC6CustomAbstractFields(value) {
+    for (let i = 47; i <= 51; i++) {
+        setDisplayAndInput(i, value);
+    }
+}
+
 function setEnabledOralPresentationCustomAbstractFields(value) {
     for (let i = 11; i <= 15; i++) {
         setDisplayAndInput(i, value);
@@ -83,6 +140,11 @@ function setEnabledSymposiumCustomAbstractFields(value) {
     }
     for (let i = 27; i <= 52; i++) {
         setDisplayAndInput(i, value);
+    }
+    const selectCT = document.getElementById('submitted_contrib_type');
+    const selectNoC = document.getElementById('custom_52');
+    if (selectCT && selectCT.value == 2 && selectNoC.options[selectNoC.selectedIndex].text == '') {
+        disableCustomNoCAbstractFields();
     }
 }
 
