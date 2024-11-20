@@ -12,6 +12,7 @@ class CustomStylesPlugin(IndicoPlugin):
         self.css_url = '/static/plugins/custom_styles/css/custom.css'
         self.js_login_url = '/static/plugins/custom_styles/js/custom_login.js'
         self.js_abstract_url = '/static/plugins/custom_styles/js/custom_abstract.js'
+        self.js_manage_abstract_url = '/static/plugins/custom_styles/js/custom_manage_abstract.js'
 
         # Registra el hook para modificar las respuestas
         current_app.after_request(self.modify_response)
@@ -40,13 +41,21 @@ class CustomStylesPlugin(IndicoPlugin):
                         '</head>',
                         f'<script src="{self.js_login_url}"></script></head>'
                     )
-
+            
             # Inyectar el JS solo en la página de abstract
             if request.endpoint == 'abstracts.call_for_abstracts': 
                 if f'src="{self.js_abstract_url}"' not in response_data:
                     response_data = response_data.replace(
                         '</head>',
                         f'<script src="{self.js_abstract_url}"></script></head>'
+                    )
+            
+             # Inyectar el JS solo en la página de manage abstract
+            if request.endpoint == 'abstracts.display_abstract': 
+                if f'src="{self.js_manage_abstract_url}"' not in response_data:
+                    response_data = response_data.replace(
+                        '</head>',
+                        f'<script src="{self.js_manage_abstract_url}"></script></head>'
                     )
 
             # Actualizar el contenido de la respuesta
