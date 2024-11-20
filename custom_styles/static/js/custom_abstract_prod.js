@@ -73,62 +73,39 @@ function enableCustomAbstractFieldsBySelectValue(value) {
 
 function setEnabledOralPresentationCustomAbstractFields(value) {
     for (let i = 11; i <= 15; i++) {
-        // Construir el selector dinámicamente
-        const element = document.querySelector(`[id$="-custom_${i}"]`);
-
-        // Verificar si el elemento existe y cambiar su estilo
-        if (element) {
-            // Cambiar el display según el valor de la variable 'value'
-            element.style.display = value ? 'block' : 'none';
-        }
+        setDisplayAndInput(i, value);
     }
 }
 
 function setEnabledSymposiumCustomAbstractFields(value) {
     for (let i = 1; i <= 10; i++) {
-        // Construir el selector dinámicamente
-        const element = document.querySelector(`[id$="-custom_${i}"]`);
-
-        // Verificar si el elemento existe y cambiar su estilo
-        if (element) {
-            // Cambiar el display según el valor de la variable 'value'
-            element.style.display = value ? 'block' : 'none';
-        }
+        setDisplayAndInput(i, value);
     }
-    for (let i = 27; i <= 51; i++) {
-        // Construir el selector dinámicamente
-        const element = document.querySelector(`[id$="-custom_${i}"]`);
-
-        // Verificar si el elemento existe y cambiar su estilo
-        if (element) {
-            // Cambiar el display según el valor de la variable 'value'
-            element.style.display = value ? 'block' : 'none';
-        }
+    for (let i = 27; i <= 52; i++) {
+        setDisplayAndInput(i, value);
     }
 }
 
 function setEnabledPosterCustomAbstractFields(value) {
     for (let i = 16; i <= 20; i++) {
-        // Construir el selector dinámicamente
-        const element = document.querySelector(`[id$="-custom_${i}"]`);
-
-        // Verificar si el elemento existe y cambiar su estilo
-        if (element) {
-            // Cambiar el display según el valor de la variable 'value'
-            element.style.display = value ? 'block' : 'none';
-        }
+        setDisplayAndInput(i, value);
     }
 }
 
 function setEnabledWorkshopCustomAbstractFields(value) {
     for (let i = 21; i <= 26; i++) {
-        // Construir el selector dinámicamente
-        const element = document.querySelector(`[id$="-custom_${i}"]`);
+        setDisplayAndInput(i, value);
+    }
+}
 
-        // Verificar si el elemento existe y cambiar su estilo
-        if (element) {
-            // Cambiar el display según el valor de la variable 'value'
-            element.style.display = value ? 'block' : 'none';
-        }
+function setDisplayAndInput(id, value) {
+    const element = document.querySelector(`[id$="-custom_${id}"]`);
+    const input = document.getElementById(`custom_${id}`);
+
+    if (element) {
+        element.style.display = value ? 'block' : 'none';
+    }
+    if (input && !value) {
+        input.value = '';
     }
 }
