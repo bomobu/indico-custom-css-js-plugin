@@ -28,7 +28,7 @@ function enableCustomAbstractFieldsBySelectValue(value) {
     } else if (value == 3) { // Poster
         setEnabledPosterCustomAbstractFields(true);
     } else if (value == 4) { // Workshop
-        setEnabledWorkshopCustomAbstractFields(true);
+        (true);
     }
 }
 
@@ -46,7 +46,7 @@ function setEnabledSymposiumCustomAbstractFields(value) {
         setDisplayAndInput(i, value);
     }
     const selectCT = document.getElementById('submitted_contrib_type');
-    const selectNoC = document.getElementById('custom_52');
+    const selectNoC = document.getElementById('custom-52');
     if (selectCT && selectCT.value == 2 && selectNoC.options[selectNoC.selectedIndex].text == '') {
         disableCustomNoCAbstractFields();
     }
@@ -58,14 +58,14 @@ function setEnabledPosterCustomAbstractFields(value) {
     }
 }
 
-function setEnabledWorkshopCustomAbstractFields(value) {
+function setEnabledWorkshopCustomAbstractField(value) {
     for (let i = 21; i <= 26; i++) {
         setDisplayAndInput(i, value);
     }
 }
 
 function setDisplayAndInput(id, value) {
-    const element = document.querySelector(`[id$="custom_${id}"]`);
+    const element = document.querySelector(`[id$="custom-${id}"]`);
 
     if (element) {
         element.style.display = value ? 'block' : 'none';

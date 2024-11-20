@@ -1,4 +1,4 @@
-function init() {
+function initCA(isEdit = false) {
     // Crear un MutationObserver para observar cambios en el DOM
     const observer = new MutationObserver((mutationsList, observer) => {
         try {
@@ -25,11 +25,9 @@ function init() {
                     console.warn("No se encontró el elemento 'select'");
                     return;
                 } else {
-                    if (select.value == "__None") {
-                        disableCustomAbstractFields();
-                    }
+                    enableCustomAbstractFieldsBySelectValueCA(select.value, isEdit);
                     select.addEventListener('change', function () {
-                        enableCustomAbstractFieldsBySelectValue(select.value);
+                        enableCustomAbstractFieldsBySelectValueCA(select.value, isEdit);
                     });
                 }
 
@@ -39,11 +37,12 @@ function init() {
                     return;
                 } else {
                     const selectCT = document.getElementById('submitted_contrib_type');
-                    if (selectCT && selectCT.value == 2 && selectNoC.options[selectNoC.selectedIndex].text == '') {
-                        disableCustomNoCAbstractFields();
+                    const selectCTValue = Number(selectCT.value);
+                    if (selectCT && selectCTValue == 2 && (selectNoC.options[selectNoC.selectedIndex].text == '' || selectNoC.options[selectNoC.selectedIndex].text == '4')) {
+                        disableCustomNoCAbstractFieldsCA(isEdit);
                     }
                     selectNoC.addEventListener('change', function () {
-                        enableCustomNoCAbstractFieldsBySelectValue(selectNoC.options[selectNoC.selectedIndex].text);
+                        enableCustomNoCAbstractFieldsBySelectValueCA(selectNoC.options[selectNoC.selectedIndex].text, isEdit);
                     });
                 }
 
@@ -64,110 +63,119 @@ function init() {
     observer.observe(document.body, config);
 }
 
-function disableCustomAbstractFields() {
-    setEnabledOralPresentationCustomAbstractFields(false);
-    setEnabledSymposiumCustomAbstractFields(false);
-    setEnabledPosterCustomAbstractFields(false);
-    setEnabledWorkshopCustomAbstractFields(false);
+function disableCustomAbstractFieldsCA(isEdit) {
+    setEnabledOralPresentationCustomAbstractFieldsCA(false, isEdit);
+    setEnabledSymposiumCustomAbstractFieldsCA(false, isEdit);
+    setEnabledPosterCustomAbstractFieldsCA(false, isEdit);
+    setEnabledWorkshopCustomAbstractFieldsCA(false, isEdit);
 }
 
-function disableCustomNoCAbstractFields() {
-    setEnabledNoC4CustomAbstractFields(true);
-    setEnabledNoC5CustomAbstractFields(false);
-    setEnabledNoC6CustomAbstractFields(false);
+function disableCustomNoCAbstractFieldsCA(isEdit) {
+    setEnabledNoC4CustomAbstractFieldsCA(true, isEdit);
+    setEnabledNoC5CustomAbstractFieldsCA(false, isEdit);
+    setEnabledNoC6CustomAbstractFieldsCA(false, isEdit);
 }
 
-function enableCustomNoCAbstractFieldsBySelectValue(value) {
+function enableCustomNoCAbstractFieldsBySelectValueCA(value, isEdit) {
     const selectCT = document.getElementById('submitted_contrib_type');
-    if (selectCT && selectCT.value == 2) {
-        if (value == '4') {
-            setEnabledNoC4CustomAbstractFields(true);
-        } else if (value == '5') {
-            setEnabledNoC5CustomAbstractFields(true);
-        } else if (value == '6') {
-            setEnabledNoC6CustomAbstractFields(true);
+    const selectCTValue = Number(selectCT.value);
+    const selectValue = Number(value);
+    if (selectCT && selectCTValue == 2) {
+        disableCustomNoCAbstractFieldsCA(isEdit);
+        if (selectValue == 4) {
+            setEnabledNoC4CustomAbstractFieldsCA(true, isEdit);
+        } else if (selectValue == 5) {
+            setEnabledNoC4CustomAbstractFieldsCA(true, isEdit);
+            setEnabledNoC5CustomAbstractFieldsCA(true, isEdit);
+        } else if (selectValue == 6) {
+            setEnabledNoC4CustomAbstractFieldsCA(true, isEdit);
+            setEnabledNoC5CustomAbstractFieldsCA(true, isEdit);
+            setEnabledNoC6CustomAbstractFieldsCA(true, isEdit);
         } else if (value == '') {
-            disableCustomNoCAbstractFields();
+            disableCustomNoCAbstractFieldsCA(isEdit);
         }
     }
 }
 
-function enableCustomAbstractFieldsBySelectValue(value) {
-    disableCustomAbstractFields();
-    if (value == 1) { // Oral Presentation
-        setEnabledOralPresentationCustomAbstractFields(true);
-    } else if (value == 2) { // Symposium
-        setEnabledSymposiumCustomAbstractFields(true);
-    } else if (value == 3) { // Poster
-        setEnabledPosterCustomAbstractFields(true);
-    } else if (value == 4) { // Workshop
-        setEnabledWorkshopCustomAbstractFields(true);
+function enableCustomAbstractFieldsBySelectValueCA(value, isEdit = false) {
+    disableCustomAbstractFieldsCA(isEdit);
+    const selectValue = Number(value);
+    if (selectValue == 1) { // Oral Presentation
+        setEnabledOralPresentationCustomAbstractFieldsCA(true, isEdit);
+    } else if (selectValue == 2) { // Symposium
+        setEnabledSymposiumCustomAbstractFieldsCA(true, isEdit);
+    } else if (selectValue == 3) { // Poster
+        setEnabledPosterCustomAbstractFieldsCA(true, isEdit);
+    } else if (selectValue == 4) { // Workshop
+        setEnabledWorkshopCustomAbstractFieldsCA(true, isEdit);
     } else if (value == "__None") {
-        disableCustomAbstractFields();
+        disableCustomAbstractFieldsCA(isEdit);
     }
 }
 
-function setEnabledNoC4CustomAbstractFields(value) {
+function setEnabledNoC4CustomAbstractFieldsCA(value, isEdit) {
     for (let i = 6; i <= 10; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
     for (let i = 27; i <= 41; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
 }
 
-function setEnabledNoC5CustomAbstractFields(value) {
+function setEnabledNoC5CustomAbstractFieldsCA(value, isEdit) {
     for (let i = 42; i <= 46; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
 }
 
-function setEnabledNoC6CustomAbstractFields(value) {
+function setEnabledNoC6CustomAbstractFieldsCA(value, isEdit) {
     for (let i = 47; i <= 51; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
 }
 
-function setEnabledOralPresentationCustomAbstractFields(value) {
+function setEnabledOralPresentationCustomAbstractFieldsCA(value, isEdit) {
     for (let i = 11; i <= 15; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
 }
 
-function setEnabledSymposiumCustomAbstractFields(value) {
+function setEnabledSymposiumCustomAbstractFieldsCA(value, isEdit) {
     for (let i = 1; i <= 10; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
     for (let i = 27; i <= 52; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
     const selectCT = document.getElementById('submitted_contrib_type');
     const selectNoC = document.getElementById('custom_52');
-    if (selectCT && selectCT.value == 2 && selectNoC.options[selectNoC.selectedIndex].text == '') {
-        disableCustomNoCAbstractFields();
+    const selectCTValue = Number(selectCT.value);
+
+    if (selectCT && selectCTValue == 2 && (selectNoC.options[selectNoC.selectedIndex].text == '' || selectNoC.options[selectNoC.selectedIndex].text == '4')) {
+        disableCustomNoCAbstractFieldsCA(isEdit);
     }
 }
 
-function setEnabledPosterCustomAbstractFields(value) {
+function setEnabledPosterCustomAbstractFieldsCA(value, isEdit) {
     for (let i = 16; i <= 20; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
 }
 
-function setEnabledWorkshopCustomAbstractFields(value) {
+function setEnabledWorkshopCustomAbstractFieldsCA(value, isEdit) {
     for (let i = 21; i <= 26; i++) {
-        setDisplayAndInput(i, value);
+        setDisplayAndInputCA(i, value, isEdit);
     }
 }
 
-function setDisplayAndInput(id, value) {
-    const element = document.querySelector(`[id$="-custom_${id}"]`);
+function setDisplayAndInputCA(id, value, isEdit) {
+    const element = document.getElementById(`form-group-custom_${id}`);
     const input = document.getElementById(`custom_${id}`);
 
     if (element) {
         element.style.display = value ? 'block' : 'none';
     }
-    if (input && !value) {
+    if (input && !value && !isEdit) {
         input.value = '';
     }
 }
